@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jumbo Add-on Maker</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Jumbo Labs</p>
+      <h1>Jumbo Add-on Maker</h1>
+      <p>Editor visual con bloques para crear mobs de Minecraft Bedrock.</p>
+    </div>
+    <button id="downloadJson" class="primary-button">Descargar JSON</button>
+  </header>
+
+  <main class="layout">
+    <section class="panel editor-panel">
+      <h2>Bloques visuales</h2>
+      <div id="blocklyDiv"></div>
+    </section>
+
+    <section class="panel preview-panel">
+      <h2>Vista del mob</h2>
+      <div class="mob-preview" aria-label="Vista previa de mob estilo Minecraft">
+        <div class="head"></div>
+        <div class="body"></div>
+        <div class="arm arm-left"></div>
+        <div class="arm arm-right"></div>
+        <div class="leg leg-left"></div>
+        <div class="leg leg-right"></div>
+      </div>
+      <h2>JSON generado</h2>
+      <pre id="jsonOutput">Arrastra bloques para generar el JSON.</pre>
+    </section>
+  </main>
+
+  <xml id="toolbox" style="display: none">
+    <category name="Mob" colour="#34d399">
+      <block type="jumbo_create_mob"></block>
+      <block type="jumbo_set_health"></block>
+      <block type="jumbo_set_speed"></block>
+      <block type="jumbo_set_damage"></block>
+    </category>
+  </xml>
+
+  <script src="src/app.js"></script>
+</body>
+</html>
