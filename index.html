@@ -12,180 +12,35 @@
     <aside class="sidebar launcher-sidebar">
       <div class="brand">
         <div class="logo" aria-label="Logo temporal de Jumbo Add-on Maker">J</div>
-        <div>
-          <p class="eyebrow">Alpha 0.6.0</p>
-          <h1>Jumbo Add-on Maker</h1>
-        </div>
+        <div><p class="eyebrow">Alpha 0.6.0</p><h1>Jumbo Add-on Maker</h1></div>
       </div>
       <button id="newAddonButton" class="main-action">+ Nuevo complemento</button>
       <button id="settingsButton" class="ghost-action">Configuración</button>
       <button id="newsButton" class="ghost-action">Novedades</button>
-      <section class="project-card">
-        <p class="label">Launcher</p>
-        <h2>Centro de inicio</h2>
-        <p>Alpha 0.6 prepara configuración, novedades y funciones beta sin quitar el autoguardado.</p>
-      </section>
-      <section id="launcherProjectSlot" class="project-card hidden">
-        <p class="label">Proyecto guardado</p>
-        <h2 id="launcherProjectName">Sin proyecto</h2>
-        <p id="launcherProjectInfo">No hay complemento abierto.</p>
-        <button id="continueProjectButton" class="secondary-action">Continuar proyecto</button>
-      </section>
+      <section class="project-card"><p class="label">Launcher</p><h2>Centro de inicio</h2><p>Alpha 0.6 prepara configuración, novedades y entidades beta reales.</p></section>
+      <section id="launcherProjectSlot" class="project-card hidden"><p class="label">Proyecto guardado</p><h2 id="launcherProjectName">Sin proyecto</h2><p id="launcherProjectInfo">No hay complemento abierto.</p><button id="continueProjectButton" class="secondary-action">Continuar proyecto</button></section>
     </aside>
-    <main class="workspace launcher-hero">
-      <section class="hero-panel giant-hero">
-        <div class="big-cube"></div>
-        <p class="eyebrow">Herramienta visual</p>
-        <h2>Alpha 0.6.0: novedades, ajustes y base beta.</h2>
-        <p>Esta actualización empieza el sistema de configuración y prepara el camino para entidades beta y más bloques.</p>
-      </section>
-    </main>
+    <main class="workspace launcher-hero"><section class="hero-panel giant-hero"><div class="big-cube"></div><p class="eyebrow">Herramienta visual</p><h2>Alpha 0.6.0: entidades beta desbloqueables.</h2><p>Activa modo experimental para crear una entidad básica guardada en el proyecto.</p></section></main>
   </div>
-
   <div id="projectScreen" class="screen app-shell hidden">
     <aside class="sidebar">
-      <div class="brand compact-brand">
-        <div class="logo small-logo">J</div>
-        <div>
-          <p class="eyebrow">Proyecto</p>
-          <h1 id="projectNameLabel">Sin complemento</h1>
-        </div>
-      </div>
+      <div class="brand compact-brand"><div class="logo small-logo">J</div><div><p class="eyebrow">Proyecto</p><h1 id="projectNameLabel">Sin complemento</h1></div></div>
       <button id="backToLauncherButton" class="ghost-action">← Launcher</button>
-      <section class="project-card">
-        <p class="label">Descripción</p>
-        <p id="projectDescriptionLabel">Crea un complemento para comenzar.</p>
-      </section>
-      <section class="tree-panel">
-        <div class="tree-header">
-          <h2>Archivos</h2>
-          <button id="moreButton" class="icon-button" aria-label="Más opciones">•••</button>
-        </div>
-        <div id="emptyTree" class="empty-state">
-          <strong>Proyecto vacío.</strong>
-          <span>Usa los tres puntitos para crear un bloque.</span>
-        </div>
-        <div id="projectTree" class="project-tree hidden"></div>
-      </section>
+      <section class="project-card"><p class="label">Descripción</p><p id="projectDescriptionLabel">Crea un complemento para comenzar.</p></section>
+      <section class="tree-panel"><div class="tree-header"><h2>Archivos</h2><button id="moreButton" class="icon-button" aria-label="Más opciones">•••</button></div><div id="emptyTree" class="empty-state"><strong>Proyecto vacío.</strong><span>Usa los tres puntitos para crear un bloque o entidad beta.</span></div><div id="projectTree" class="project-tree hidden"></div></section>
     </aside>
-    <main class="workspace">
-      <header class="hero-panel">
-        <p class="eyebrow">Espacio de trabajo</p>
-        <h2 id="heroTitle">Complemento abierto</h2>
-        <p id="heroText">Aquí se organiza tu complemento. Las carpetas rojas son comportamiento y las azules son recursos.</p>
-      </header>
-      <section class="canvas-panel project-home">
-        <div class="canvas-toolbar">
-          <div>
-            <p class="label">Vista del proyecto</p>
-            <h2 id="canvasTitle">Panel del complemento</h2>
-          </div>
-          <button id="addVisualBlockButton" class="secondary-action" disabled>Abrir editor visual</button>
-        </div>
-        <div id="welcomeMessage" class="welcome-message">
-          <div class="folder-showcase">
-            <div class="pack-card red-pack-card">BP</div>
-            <div class="pack-card blue-pack-card">RP</div>
-          </div>
-          <h3>Este ya no es el launcher.</h3>
-          <p>Tu complemento vive aquí. Crea un bloque para generar una estructura básica y luego abre su editor.</p>
-        </div>
-      </section>
-    </main>
+    <main class="workspace"><header class="hero-panel"><p class="eyebrow">Espacio de trabajo</p><h2 id="heroTitle">Complemento abierto</h2><p id="heroText">Aquí se organiza tu complemento. Las carpetas rojas son comportamiento y las azules son recursos.</p></header><section class="canvas-panel project-home"><div class="canvas-toolbar"><div><p class="label">Vista del proyecto</p><h2 id="canvasTitle">Panel del complemento</h2></div><button id="addVisualBlockButton" class="secondary-action" disabled>Abrir editor visual</button></div><div id="welcomeMessage" class="welcome-message"><div class="folder-showcase"><div class="pack-card red-pack-card">BP</div><div class="pack-card blue-pack-card">RP</div></div><h3>Este ya no es el launcher.</h3><p>Tu complemento vive aquí. Crea un bloque o entidad para generar estructura básica.</p></div></section></main>
   </div>
-
-  <div id="blockEditorScreen" class="screen editor-screen hidden">
-    <header class="editor-topbar">
-      <button id="backToProjectButton" class="ghost-action">← Proyecto</button>
-      <div>
-        <p class="eyebrow">Editor visual de bloque</p>
-        <h2 id="blockNameLabel">Sin bloque</h2>
-        <p id="blockIdLabel">Identificador pendiente</p>
-      </div>
-      <button id="openBlockPaletteButton" class="secondary-action">+ Bloques</button>
-    </header>
-    <main class="editor-layout">
-      <section class="file-preview-panel">
-        <p class="label">Archivo básico</p>
-        <h3 id="activeFileName">blocks/mi_bloque.json</h3>
-        <pre id="filePreview">Selecciona un archivo o crea un bloque.</pre>
-      </section>
-      <section class="blockly-stage">
-        <div id="blocklyDiv"></div>
-      </section>
-    </main>
-  </div>
-
-  <div id="newAddonModal" class="modal hidden" role="dialog" aria-modal="true">
-    <form id="newAddonForm" class="modal-card">
-      <p class="eyebrow">Nuevo proyecto</p>
-      <h2>Crear complemento</h2>
-      <label>Nombre del complemento<input id="addonNameInput" type="text" placeholder="Ejemplo: Poppy Add-on" required /></label>
-      <label>Descripción opcional<textarea id="addonDescriptionInput" placeholder="Describe tu complemento"></textarea></label>
-      <p class="hint">Alpha: todavía no se genera manifest.json. Primero se abre una interfaz de proyecto separada.</p>
-      <div class="modal-actions"><button type="button" class="ghost-action" data-close-modal>Cancelar</button><button type="submit" class="main-action">Crear</button></div>
-    </form>
-  </div>
-
-  <div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true">
-    <div class="modal-card">
-      <p class="eyebrow">Configuración</p>
-      <h2>Ajustes de Alpha 0.6</h2>
-      <label><input id="experimentalMode" type="checkbox" /> Modo experimental</label>
-      <p class="hint">Activa funciones beta. Algunas opciones pueden cambiar en futuras versiones.</p>
-      <button type="button" class="main-action" data-close-modal>Cerrar</button>
-    </div>
-  </div>
-
-  <div id="newsModal" class="modal hidden" role="dialog" aria-modal="true">
-    <div class="modal-card">
-      <p class="eyebrow">Novedades</p>
-      <h2>Alpha 0.6.0</h2>
-      <p>Se agregó base de configuración, botón de novedades y modo experimental para preparar funciones beta.</p>
-      <p class="hint">Historial: 0.5 autoguardado, 0.4 estabilidad, 0.3 launcher y editor.</p>
-      <button type="button" class="main-action" data-close-modal>Entendido</button>
-    </div>
-  </div>
-
+  <div id="blockEditorScreen" class="screen editor-screen hidden"><header class="editor-topbar"><button id="backToProjectButton" class="ghost-action">← Proyecto</button><div><p class="eyebrow">Editor visual</p><h2 id="blockNameLabel">Sin elemento</h2><p id="blockIdLabel">Identificador pendiente</p></div><button id="openBlockPaletteButton" class="secondary-action">+ Bloques</button></header><main class="editor-layout"><section class="file-preview-panel"><p class="label">Archivo básico</p><h3 id="activeFileName">archivo.json</h3><pre id="filePreview">Selecciona un archivo o crea un elemento.</pre></section><section class="blockly-stage"><div id="blocklyDiv"></div></section></main></div>
+  <div id="newAddonModal" class="modal hidden" role="dialog" aria-modal="true"><form id="newAddonForm" class="modal-card"><p class="eyebrow">Nuevo proyecto</p><h2>Crear complemento</h2><label>Nombre del complemento<input id="addonNameInput" type="text" placeholder="Ejemplo: Poppy Add-on" required /></label><label>Descripción opcional<textarea id="addonDescriptionInput" placeholder="Describe tu complemento"></textarea></label><div class="modal-actions"><button type="button" class="ghost-action" data-close-modal>Cancelar</button><button type="submit" class="main-action">Crear</button></div></form></div>
+  <div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true"><div class="modal-card"><p class="eyebrow">Configuración</p><h2>Ajustes de Alpha 0.6</h2><label><input id="experimentalMode" type="checkbox" /> Modo experimental</label><p class="hint">Activa entidades beta. Algunas opciones pueden cambiar en futuras versiones.</p><button type="button" class="main-action" data-close-modal>Cerrar</button></div></div>
+  <div id="newsModal" class="modal hidden" role="dialog" aria-modal="true"><div class="modal-card"><p class="eyebrow">Novedades</p><h2>Alpha 0.6.0</h2><p>Se agregó configuración, novedades, modo experimental y entidad beta funcional.</p><p class="hint">Historial: 0.5 autoguardado, 0.4 estabilidad, 0.3 launcher y editor.</p><button type="button" class="main-action" data-close-modal>Entendido</button></div></div>
   <div id="moreMenu" class="floating-menu hidden"><button id="createNewButton">Crear nuevo</button></div>
-
-  <div id="createPanel" class="create-panel hidden">
-    <div class="create-card">
-      <button id="closeCreatePanel" class="close-button">×</button>
-      <p class="eyebrow">Crear nuevo</p>
-      <h2>Selecciona qué quieres crear</h2>
-      <div class="create-grid">
-        <button id="createBlockButton" class="create-option"><span class="option-icon">▣</span><strong>Bloque</strong><small>Crea estructura de behavior pack y resource pack.</small></button>
-        <button class="create-option disabled" disabled><span class="option-icon">Beta</span><strong>Entidad</strong><small>Próximamente.</small></button>
-        <button class="create-option disabled" disabled><span class="option-icon">Tex</span><strong>Textura</strong><small>Próximamente.</small></button>
-      </div>
-    </div>
-  </div>
-
-  <div id="newBlockModal" class="modal hidden" role="dialog" aria-modal="true">
-    <form id="newBlockForm" class="modal-card">
-      <p class="eyebrow">Bloque básico</p>
-      <h2>Crear bloque</h2>
-      <label>Nombre visible<input id="blockNameInput" type="text" placeholder="Ejemplo: Bloque de juguete" required /></label>
-      <label>Identificador<input id="blockIdInput" type="text" placeholder="jumbo:bloque_juguete" required /></label>
-      <div class="modal-actions"><button type="button" class="ghost-action" data-close-modal>Cancelar</button><button type="submit" class="main-action">Crear bloque</button></div>
-    </form>
-  </div>
-
-  <div id="blockPalette" class="create-panel hidden">
-    <div class="create-card palette-card">
-      <button id="closeBlockPalette" class="close-button">×</button>
-      <p class="eyebrow">Biblioteca de bloques</p>
-      <h2>Comportamiento</h2>
-      <p class="hint">Usamos Blockly, pero lo escondemos dentro de una pantalla más cómoda para móvil.</p>
-      <div class="create-grid">
-        <button class="create-option palette-option" data-spawn-block="jumbo_block_health"><span class="option-icon">♥</span><strong>Resistencia</strong><small>Agrega resistencia al bloque.</small></button>
-        <button class="create-option palette-option" data-spawn-block="jumbo_block_resistance"><span class="option-icon">⛏</span><strong>Herramienta</strong><small>Define herramienta sugerida.</small></button>
-      </div>
-    </div>
-  </div>
-
-  <xml id="toolbox" style="display: none"><category name="Comportamiento" colour="#a855f7"><block type="jumbo_block_health"></block><block type="jumbo_block_resistance"></block></category></xml>
+  <div id="createPanel" class="create-panel hidden"><div class="create-card"><button id="closeCreatePanel" class="close-button">×</button><p class="eyebrow">Crear nuevo</p><h2>Selecciona qué quieres crear</h2><div class="create-grid"><button id="createBlockButton" class="create-option"><span class="option-icon">▣</span><strong>Bloque</strong><small>Estructura BP/RP para bloques.</small></button><button id="createEntityButton" class="create-option"><span class="option-icon">Beta</span><strong>Entidad beta</strong><small>Disponible con modo experimental.</small></button><button class="create-option disabled" disabled><span class="option-icon">Tex</span><strong>Textura</strong><small>Próximamente.</small></button></div></div></div>
+  <div id="newBlockModal" class="modal hidden" role="dialog" aria-modal="true"><form id="newBlockForm" class="modal-card"><p class="eyebrow">Bloque básico</p><h2>Crear bloque</h2><label>Nombre visible<input id="blockNameInput" type="text" placeholder="Ejemplo: Bloque de juguete" required /></label><label>Identificador<input id="blockIdInput" type="text" placeholder="jumbo:bloque_juguete" required /></label><div class="modal-actions"><button type="button" class="ghost-action" data-close-modal>Cancelar</button><button type="submit" class="main-action">Crear bloque</button></div></form></div>
+  <div id="newEntityModal" class="modal hidden" role="dialog" aria-modal="true"><form id="newEntityForm" class="modal-card"><p class="eyebrow">Entidad beta</p><h2>Crear entidad básica</h2><p class="hint">Beta simple: nombre, identificador y vida. Sin modelo avanzado todavía.</p><label>Nombre visible<input id="entityNameInput" type="text" placeholder="Ejemplo: Animal prueba" required /></label><label>Identificador<input id="entityIdInput" type="text" placeholder="jumbo:animal_prueba" required /></label><label>Vida<input id="entityHealthInput" type="number" min="1" max="500" value="20" /></label><div class="modal-actions"><button type="button" class="ghost-action" data-close-modal>Cancelar</button><button type="submit" class="main-action">Crear entidad</button></div></form></div>
+  <div id="blockPalette" class="create-panel hidden"><div class="create-card palette-card"><button id="closeBlockPalette" class="close-button">×</button><p class="eyebrow">Biblioteca de bloques</p><h2>Comportamiento</h2><div class="create-grid"><button class="create-option palette-option" data-spawn-block="jumbo_block_health"><span class="option-icon">♥</span><strong>Resistencia</strong><small>Agrega resistencia.</small></button><button class="create-option palette-option" data-spawn-block="jumbo_block_resistance"><span class="option-icon">⛏</span><strong>Herramienta</strong><small>Define herramienta.</small></button></div></div></div>
+  <xml id="toolbox" style="display:none"><category name="Comportamiento" colour="#a855f7"><block type="jumbo_block_health"></block><block type="jumbo_block_resistance"></block></category></xml>
   <script type="module" src="src/app.js"></script>
 </body>
 </html>
