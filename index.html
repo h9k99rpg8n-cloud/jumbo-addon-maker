@@ -13,15 +13,17 @@
       <div class="brand">
         <div class="logo" aria-label="Logo temporal de Jumbo Add-on Maker">J</div>
         <div>
-          <p class="eyebrow">Alpha 0.5.0</p>
+          <p class="eyebrow">Alpha 0.6.0</p>
           <h1>Jumbo Add-on Maker</h1>
         </div>
       </div>
       <button id="newAddonButton" class="main-action">+ Nuevo complemento</button>
+      <button id="settingsButton" class="ghost-action">Configuración</button>
+      <button id="newsButton" class="ghost-action">Novedades</button>
       <section class="project-card">
         <p class="label">Launcher</p>
         <h2>Centro de inicio</h2>
-        <p>Aquí creas o abres complementos. El editor vive en otra interfaz. Autoguardado básico activado.</p>
+        <p>Alpha 0.6 prepara configuración, novedades y funciones beta sin quitar el autoguardado.</p>
       </section>
       <section id="launcherProjectSlot" class="project-card hidden">
         <p class="label">Proyecto guardado</p>
@@ -34,8 +36,8 @@
       <section class="hero-panel giant-hero">
         <div class="big-cube"></div>
         <p class="eyebrow">Herramienta visual</p>
-        <h2>Alpha 0.5.0: primer autoguardado con IndexedDB.</h2>
-        <p>Crea un complemento y un bloque, recarga la página y el proyecto debería seguir disponible.</p>
+        <h2>Alpha 0.6.0: novedades, ajustes y base beta.</h2>
+        <p>Esta actualización empieza el sistema de configuración y prepara el camino para entidades beta y más bloques.</p>
       </section>
     </main>
   </div>
@@ -125,6 +127,26 @@
     </form>
   </div>
 
+  <div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <p class="eyebrow">Configuración</p>
+      <h2>Ajustes de Alpha 0.6</h2>
+      <label><input id="experimentalMode" type="checkbox" /> Modo experimental</label>
+      <p class="hint">Activa funciones beta. Algunas opciones pueden cambiar en futuras versiones.</p>
+      <button type="button" class="main-action" data-close-modal>Cerrar</button>
+    </div>
+  </div>
+
+  <div id="newsModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <p class="eyebrow">Novedades</p>
+      <h2>Alpha 0.6.0</h2>
+      <p>Se agregó base de configuración, botón de novedades y modo experimental para preparar funciones beta.</p>
+      <p class="hint">Historial: 0.5 autoguardado, 0.4 estabilidad, 0.3 launcher y editor.</p>
+      <button type="button" class="main-action" data-close-modal>Entendido</button>
+    </div>
+  </div>
+
   <div id="moreMenu" class="floating-menu hidden"><button id="createNewButton">Crear nuevo</button></div>
 
   <div id="createPanel" class="create-panel hidden">
@@ -134,8 +156,8 @@
       <h2>Selecciona qué quieres crear</h2>
       <div class="create-grid">
         <button id="createBlockButton" class="create-option"><span class="option-icon">▣</span><strong>Bloque</strong><small>Crea estructura de behavior pack y resource pack.</small></button>
-        <button class="create-option disabled" disabled><span class="option-icon">☠</span><strong>Entidad</strong><small>Próximamente.</small></button>
-        <button class="create-option disabled" disabled><span class="option-icon">🎨</span><strong>Textura</strong><small>Próximamente.</small></button>
+        <button class="create-option disabled" disabled><span class="option-icon">Beta</span><strong>Entidad</strong><small>Próximamente.</small></button>
+        <button class="create-option disabled" disabled><span class="option-icon">Tex</span><strong>Textura</strong><small>Próximamente.</small></button>
       </div>
     </div>
   </div>
