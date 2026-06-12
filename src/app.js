@@ -1,178 +1,228 @@
 const state = {
-  mobName: "jumbo:custom_mob",
-  health: 20,
-  speed: 0.25,
-  damage: 3,
+  addon: null,
+  blocks: [],
+  workspace: null,
 };
 
-Blockly.Blocks.jumbo_create_mob = {
-  init() {
-    this.appendDummyInput()
-      .appendField("crear mob")
-      .appendField(new Blockly.FieldTextInput("jumbo:custom_mob"), "MOB_NAME");
-    this.setNextStatement(true, null);
-    this.setColour(155);
-    this.setTooltip("Define el identificador del mob.");
-  },
+const $ = (selector) => document.querySelector(selector);
+
+const ui = {
+  newAddonButton: $("#newAddonButton"),
+  newAddonModal: $("#newAddonModal"),
+  newAddonForm: $("#newAddonForm"),
+  addonNameInput: $("#addonNameInput"),
+  addonDescriptionInput: $("#addonDescriptionInput"),
+  projectNameLabel: $("#projectNameLabel"),
+  projectDescriptionLabel: $("#projectDescriptionLabel"),
+  emptyTree: $("#emptyTree"),
+  projectTree: $("#projectTree"),
+  moreButton: $("#moreButton"),
+  moreMenu: $("#moreMenu"),
+  createNewButton: $("#createNewButton"),
+  createPanel: $("#createPanel"),
+  closeCreatePanel: $("#closeCreatePanel"),
+  createBlockButton: $("#createBlockButton"),
+  newBlockModal: $("#newBlockModal"),
+  newBlockForm: $("#newBlockForm"),
+  blockNameInput: $("#blockNameInput"),
+  blockIdInput: $("#blockIdInput"),
+  heroTitle: $("#heroTitle"),
+  heroText: $("#heroText"),
+  canvasTitle: $("#canvasTitle"),
+  welcomeMessage: $("#welcomeMessage"),
+  blockEditor: $("#blockEditor"),
+  blockNameLabel: $("#blockNameLabel"),
+  blockIdLabel: $("#blockIdLabel"),
+  addVisualBlockButton: $("#addVisualBlockButton"),
 };
 
-Blockly.Blocks.jumbo_set_health = {
-  init() {
-    this.appendDummyInput()
-      .appendField("vida")
-      .appendField(new Blockly.FieldNumber(20, 1, 500), "HEALTH");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(120);
-    this.setTooltip("Define la vida máxima del mob.");
-  },
-};
-
-Blockly.Blocks.jumbo_set_speed = {
-  init() {
-    this.appendDummyInput()
-      .appendField("velocidad")
-      .appendField(new Blockly.FieldNumber(0.25, 0, 3, 0.05), "SPEED");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(210);
-    this.setTooltip("Define la velocidad de movimiento.");
-  },
-};
-
-Blockly.Blocks.jumbo_set_damage = {
-  init() {
-    this.appendDummyInput()
-      .appendField("daño")
-      .appendField(new Blockly.FieldNumber(3, 0, 100), "DAMAGE");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(20);
-    this.setTooltip("Define el daño del ataque cuerpo a cuerpo.");
-  },
-};
-
-const workspace = Blockly.inject("blocklyDiv", {
-  toolbox: document.getElementById("toolbox"),
-  trashcan: true,
-  scrollbars: true,
-  zoom: {
-    controls: true,
-    wheel: true,
-    startScale: 0.85,
-    maxScale: 1.4,
-    minScale: 0.5,
-    scaleSpeed: 1.1,
-  },
-});
-
-function readWorkspace() {
-  const blocks = workspace.getTopBlocks(true);
-
-  state.mobName = "jumbo:custom_mob";
-  state.health = 20;
-  state.speed = 0.25;
-  state.damage = 3;
-
-  for (const topBlock of blocks) {
-    let block = topBlock;
-    while (block) {
-      if (block.type === "jumbo_create_mob") {
-        state.mobName = block.getFieldValue("MOB_NAME") || state.mobName;
-      }
-      if (block.type === "jumbo_set_health") {
-        state.health = Number(block.getFieldValue("HEALTH"));
-      }
-      if (block.type === "jumbo_set_speed") {
-        state.speed = Number(block.getFieldValue("SPEED"));
-      }
-      if (block.type === "jumbo_set_damage") {
-        state.damage = Number(block.getFieldValue("DAMAGE"));
-      }
-      block = block.getNextBlock();
-    }
-  }
+function openModal(modal) {
+  modal.classList.remove("hidden");
 }
 
-function buildBedrockEntityJson() {
-  return {
-    "format_version": "1.20.80",
-    "minecraft:entity": {
-      description: {
-        identifier: state.mobName,
-        is_spawnable: true,
-        is_summonable: true,
-        is_experimental: false,
-      },
-      components: {
-        "minecraft:type_family": {
-          family: ["monster", "jumbo_custom"],
-        },
-        "minecraft:health": {
-          value: state.health,
-          max: state.health,
-        },
-        "minecraft:movement": {
-          value: state.speed,
-        },
-        "minecraft:attack": {
-          damage: state.damage,
-        },
-        "minecraft:collision_box": {
-          width: 0.6,
-          height: 1.9,
-        },
-        "minecraft:physics": {},
-        "minecraft:pushable": {
-          is_pushable: true,
-          is_pushable_by_piston: true,
-        },
-      },
+function closeModals() {
+  document.querySelectorAll(".modal").forEach((modal) => modal.classList.add("hidden"));
+}
+
+function slugify(value) {
+  return value
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "") || "mi_bloque";
+}
+
+function createAddon(name, description) {
+  state.addon = {
+    name: name.trim(),
+    description: description.trim(),
+  };
+  state.blocks = [];
+  renderApp();
+}
+
+function createBasicBlock(name, identifier) {
+  const block = {
+    type: "block",
+    name: name.trim(),
+    identifier: identifier.trim(),
+    behaviorPath: `behavior_packs/blocks/${slugify(name)}.json`,
+    resourcePath: `resource_packs/blocks/${slugify(name)}.json`,
+  };
+  state.blocks.push(block);
+  renderApp();
+  showBlockEditor(block);
+}
+
+function renderApp() {
+  const hasAddon = Boolean(state.addon);
+  ui.projectNameLabel.textContent = hasAddon ? state.addon.name : "Sin complemento";
+  ui.projectDescriptionLabel.textContent = hasAddon
+    ? state.addon.description || "Sin descripción. Alpha sin manifest todavía."
+    : "Crea un complemento para comenzar.";
+
+  ui.heroTitle.textContent = hasAddon ? `Complemento: ${state.addon.name}` : "Empieza creando un complemento";
+  ui.heroText.textContent = hasAddon
+    ? "Ahora puedes usar los tres puntitos para crear bloques y ver la estructura tipo bridge: behavior pack rojo y resource pack azul."
+    : "Esta versión alpha prepara el panel, la estructura de carpetas y un bloque básico sin generar todavía manifiesto.";
+
+  ui.canvasTitle.textContent = hasAddon ? "Panel del complemento" : "Nada creado todavía";
+  ui.moreButton.disabled = !hasAddon;
+
+  if (!hasAddon) {
+    ui.emptyTree.classList.remove("hidden");
+    ui.projectTree.classList.add("hidden");
+    ui.projectTree.innerHTML = "";
+    ui.welcomeMessage.classList.remove("hidden");
+    ui.blockEditor.classList.add("hidden");
+    ui.addVisualBlockButton.disabled = true;
+    return;
+  }
+
+  ui.emptyTree.classList.add("hidden");
+  ui.projectTree.classList.remove("hidden");
+  ui.projectTree.innerHTML = buildTreeHtml();
+  ui.addVisualBlockButton.disabled = state.blocks.length === 0;
+}
+
+function buildTreeHtml() {
+  const blockFiles = state.blocks
+    .map((block) => `
+      <div class="file-item visual" data-block-id="${block.identifier}">▣ ${block.name}</div>
+      <div class="file-item">${block.behaviorPath}</div>
+    `)
+    .join("") || `<div class="file-item">Sin archivos todavía</div>`;
+
+  const resourceFiles = state.blocks
+    .map((block) => `
+      <div class="file-item">${block.resourcePath}</div>
+      <div class="file-item">resource_packs/textures/blocks/${slugify(block.name)}.png</div>
+    `)
+    .join("") || `<div class="file-item">Sin archivos todavía</div>`;
+
+  return `
+    <div class="folder red">
+      <div class="folder-title">■ Behavior Pack</div>
+      ${blockFiles}
+    </div>
+    <div class="folder blue">
+      <div class="folder-title">■ Resource Pack</div>
+      ${resourceFiles}
+    </div>
+  `;
+}
+
+function showBlockEditor(block) {
+  ui.welcomeMessage.classList.add("hidden");
+  ui.blockEditor.classList.remove("hidden");
+  ui.blockNameLabel.textContent = block.name;
+  ui.blockIdLabel.textContent = block.identifier;
+  ui.canvasTitle.textContent = `Editando: ${block.name}`;
+  initializeBlocklyOnce();
+}
+
+function initializeBlocklyOnce() {
+  if (state.workspace) return;
+
+  Blockly.Blocks.jumbo_block_health = {
+    init() {
+      this.appendDummyInput()
+        .appendField("resistencia del bloque")
+        .appendField(new Blockly.FieldNumber(5, 1, 100), "RESISTANCE");
+      this.setColour(285);
+      this.setTooltip("Bloque visual alpha para comportamiento básico.");
     },
   };
-}
 
-function updateOutput() {
-  readWorkspace();
-  const json = buildBedrockEntityJson();
-  document.getElementById("jsonOutput").textContent = JSON.stringify(json, null, 2);
-}
+  Blockly.Blocks.jumbo_block_resistance = {
+    init() {
+      this.appendDummyInput()
+        .appendField("destruir con herramienta")
+        .appendField(new Blockly.FieldDropdown([["pico", "pickaxe"], ["mano", "hand"]]), "TOOL");
+      this.setColour(260);
+      this.setTooltip("Define una idea de herramienta. La exportación real vendrá después.");
+    },
+  };
 
-function downloadJson() {
-  updateOutput();
-  const fileName = `${state.mobName.replace(/[^a-z0-9_-]/gi, "_")}.json`;
-  const blob = new Blob([document.getElementById("jsonOutput").textContent], {
-    type: "application/json",
+  state.workspace = Blockly.inject("blocklyDiv", {
+    toolbox: document.getElementById("toolbox"),
+    trashcan: true,
+    scrollbars: true,
+    zoom: {
+      controls: true,
+      wheel: true,
+      startScale: 0.85,
+      maxScale: 1.4,
+      minScale: 0.5,
+      scaleSpeed: 1.1,
+    },
   });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = fileName;
-  link.click();
-  URL.revokeObjectURL(url);
 }
 
-workspace.addChangeListener(updateOutput);
-document.getElementById("downloadJson").addEventListener("click", downloadJson);
+ui.newAddonButton.addEventListener("click", () => openModal(ui.newAddonModal));
 
-const startBlock = workspace.newBlock("jumbo_create_mob");
-startBlock.initSvg();
-startBlock.render();
-startBlock.moveBy(40, 40);
+ui.newAddonForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  createAddon(ui.addonNameInput.value, ui.addonDescriptionInput.value);
+  closeModals();
+  ui.newAddonForm.reset();
+});
 
-const healthBlock = workspace.newBlock("jumbo_set_health");
-healthBlock.initSvg();
-healthBlock.render();
-startBlock.nextConnection.connect(healthBlock.previousConnection);
+ui.moreButton.addEventListener("click", () => {
+  if (!state.addon) return;
+  ui.moreMenu.classList.toggle("hidden");
+});
 
-const speedBlock = workspace.newBlock("jumbo_set_speed");
-speedBlock.initSvg();
-speedBlock.render();
-healthBlock.nextConnection.connect(speedBlock.previousConnection);
+ui.createNewButton.addEventListener("click", () => {
+  ui.moreMenu.classList.add("hidden");
+  ui.createPanel.classList.remove("hidden");
+});
 
-const damageBlock = workspace.newBlock("jumbo_set_damage");
-damageBlock.initSvg();
-damageBlock.render();
-speedBlock.nextConnection.connect(damageBlock.previousConnection);
+ui.closeCreatePanel.addEventListener("click", () => ui.createPanel.classList.add("hidden"));
 
-updateOutput();
+ui.createBlockButton.addEventListener("click", () => {
+  ui.createPanel.classList.add("hidden");
+  const suggested = state.addon ? `jumbo:${slugify(state.addon.name)}_block` : "jumbo:mi_bloque";
+  ui.blockIdInput.value = suggested;
+  openModal(ui.newBlockModal);
+});
+
+ui.newBlockForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  createBasicBlock(ui.blockNameInput.value, ui.blockIdInput.value);
+  closeModals();
+  ui.newBlockForm.reset();
+});
+
+ui.addVisualBlockButton.addEventListener("click", () => {
+  const firstBlock = state.blocks[0];
+  if (firstBlock) showBlockEditor(firstBlock);
+});
+
+document.querySelectorAll("[data-close-modal]").forEach((button) => {
+  button.addEventListener("click", closeModals);
+});
+
+renderApp();
