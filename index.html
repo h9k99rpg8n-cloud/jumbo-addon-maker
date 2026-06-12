@@ -8,45 +8,149 @@
   <script src="https://unpkg.com/blockly/blockly.min.js"></script>
 </head>
 <body>
-  <header class="app-header">
-    <div>
-      <p class="eyebrow">Jumbo Labs</p>
-      <h1>Jumbo Add-on Maker</h1>
-      <p>Editor visual con bloques para crear mobs de Minecraft Bedrock.</p>
-    </div>
-    <button id="downloadJson" class="primary-button">Descargar JSON</button>
-  </header>
-
-  <main class="layout">
-    <section class="panel editor-panel">
-      <h2>Bloques visuales</h2>
-      <div id="blocklyDiv"></div>
-    </section>
-
-    <section class="panel preview-panel">
-      <h2>Vista del mob</h2>
-      <div class="mob-preview" aria-label="Vista previa de mob estilo Minecraft">
-        <div class="head"></div>
-        <div class="body"></div>
-        <div class="arm arm-left"></div>
-        <div class="arm arm-right"></div>
-        <div class="leg leg-left"></div>
-        <div class="leg leg-right"></div>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo" aria-label="Logo temporal de Jumbo Add-on Maker">J</div>
+        <div>
+          <p class="eyebrow">Alpha 0.2</p>
+          <h1>Jumbo Add-on Maker</h1>
+        </div>
       </div>
-      <h2>JSON generado</h2>
-      <pre id="jsonOutput">Arrastra bloques para generar el JSON.</pre>
-    </section>
-  </main>
+
+      <button id="newAddonButton" class="main-action">+ Nuevo complemento</button>
+
+      <section class="project-card">
+        <p class="label">Proyecto actual</p>
+        <h2 id="projectNameLabel">Sin complemento</h2>
+        <p id="projectDescriptionLabel">Crea un complemento para comenzar.</p>
+      </section>
+
+      <section class="tree-panel">
+        <div class="tree-header">
+          <h2>Estructura</h2>
+          <button id="moreButton" class="icon-button" aria-label="Más opciones">•••</button>
+        </div>
+        <div id="emptyTree" class="empty-state">
+          <strong>Tu proyecto está vacío.</strong>
+          <span>Crea un complemento y luego agrega un bloque.</span>
+        </div>
+        <div id="projectTree" class="project-tree hidden"></div>
+      </section>
+    </aside>
+
+    <main class="workspace">
+      <header class="hero-panel">
+        <p class="eyebrow">Constructor visual</p>
+        <h2 id="heroTitle">Empieza creando un complemento</h2>
+        <p id="heroText">Esta versión alpha prepara el panel, la estructura de carpetas y un bloque básico sin generar todavía manifiesto.</p>
+      </header>
+
+      <section class="canvas-panel">
+        <div class="canvas-toolbar">
+          <div>
+            <p class="label">Vista del proyecto</p>
+            <h2 id="canvasTitle">Nada creado todavía</h2>
+          </div>
+          <button id="addVisualBlockButton" class="secondary-action" disabled>+ Agregar bloques visuales</button>
+        </div>
+
+        <div id="welcomeMessage" class="welcome-message">
+          <div class="big-cube"></div>
+          <h3>Bienvenido, creador.</h3>
+          <p>Tu complemento aparecerá aquí. Primero crea el proyecto, luego agrega un bloque básico y después construiremos los bloques visuales de comportamiento.</p>
+        </div>
+
+        <div id="blockEditor" class="block-editor hidden">
+          <div class="block-summary">
+            <div class="block-icon">▣</div>
+            <div>
+              <p class="label">Bloque básico</p>
+              <h3 id="blockNameLabel">Sin bloque</h3>
+              <p id="blockIdLabel">Identificador pendiente</p>
+            </div>
+          </div>
+          <div id="blocklyDiv"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="newAddonModal" class="modal hidden" role="dialog" aria-modal="true">
+    <form id="newAddonForm" class="modal-card">
+      <p class="eyebrow">Nuevo proyecto</p>
+      <h2>Crear complemento</h2>
+      <label>
+        Nombre del complemento
+        <input id="addonNameInput" type="text" placeholder="Ejemplo: Poppy Add-on" required />
+      </label>
+      <label>
+        Descripción opcional
+        <textarea id="addonDescriptionInput" placeholder="Describe tu complemento"></textarea>
+      </label>
+      <p class="hint">Alpha: todavía no se genera manifest.json. Primero vamos a construir la estructura visual.</p>
+      <div class="modal-actions">
+        <button type="button" class="ghost-action" data-close-modal>Cancelar</button>
+        <button type="submit" class="main-action">Crear</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="moreMenu" class="floating-menu hidden">
+    <button id="createNewButton">Crear nuevo</button>
+  </div>
+
+  <div id="createPanel" class="create-panel hidden">
+    <div class="create-card">
+      <button id="closeCreatePanel" class="close-button">×</button>
+      <p class="eyebrow">Crear nuevo</p>
+      <h2>Selecciona qué quieres crear</h2>
+      <div class="create-grid">
+        <button id="createBlockButton" class="create-option">
+          <span class="option-icon">▣</span>
+          <strong>Bloque</strong>
+          <small>Crea estructura de behavior pack y resource pack.</small>
+        </button>
+        <button class="create-option disabled" disabled>
+          <span class="option-icon">☠</span>
+          <strong>Entidad</strong>
+          <small>Próximamente.</small>
+        </button>
+        <button class="create-option disabled" disabled>
+          <span class="option-icon">🎨</span>
+          <strong>Textura</strong>
+          <small>Próximamente.</small>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="newBlockModal" class="modal hidden" role="dialog" aria-modal="true">
+    <form id="newBlockForm" class="modal-card">
+      <p class="eyebrow">Bloque básico</p>
+      <h2>Crear bloque</h2>
+      <label>
+        Nombre visible
+        <input id="blockNameInput" type="text" placeholder="Ejemplo: Bloque de juguete" required />
+      </label>
+      <label>
+        Identificador
+        <input id="blockIdInput" type="text" placeholder="jumbo:bloque_juguete" required />
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="ghost-action" data-close-modal>Cancelar</button>
+        <button type="submit" class="main-action">Crear bloque</button>
+      </div>
+    </form>
+  </div>
 
   <xml id="toolbox" style="display: none">
-    <category name="Mob" colour="#34d399">
-      <block type="jumbo_create_mob"></block>
-      <block type="jumbo_set_health"></block>
-      <block type="jumbo_set_speed"></block>
-      <block type="jumbo_set_damage"></block>
+    <category name="Comportamiento" colour="#a855f7">
+      <block type="jumbo_block_health"></block>
+      <block type="jumbo_block_resistance"></block>
     </category>
   </xml>
 
-  <script src="src/app.js"></script>
+  <script type="module" src="src/app.js"></script>
 </body>
 </html>
